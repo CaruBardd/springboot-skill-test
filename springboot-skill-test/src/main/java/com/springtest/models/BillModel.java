@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 public class BillModel {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
 	@Column(name="totalAmount")
