@@ -1,6 +1,7 @@
 package com.springtest.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +18,24 @@ public class BillService {
 	
 	public void createBill(long id, UserModel user, double totalAmount, String desc) {
 		BillModel bill = new BillModel();
-		bill.setDesc(desc);
 		bill.setTotalAmount(totalAmount);
-		bill.setId_user(user);
+		bill.setUser(user);
 		bill.setId(id);
+		bill.setDescription(desc);
 		repo.save(bill);
 	}
 	
-	public List<BillModel> showBills() {
+	public List<BillModel> listBills() {
 		return repo.findAll();
+	}
+	
+	public List<BillModel> findBills(UserModel user){
+		return repo.findByUser(user);
+	}
+	
+	public BillModel findBillId(long id) {
+		Optional<BillModel> bill = repo.findById((int)id);
+		BillModel res = bill.get();
+		return res;
 	}
 }

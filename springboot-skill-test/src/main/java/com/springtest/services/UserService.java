@@ -1,6 +1,7 @@
 package com.springtest.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,9 @@ public class UserService {
 		return repo.findAll();
 	}
 	
-	
+	public UserModel findUserId(long id) {
+		Optional<UserModel> user = repo.findById(id);
+		UserModel res = user.get();
+		return res;
+	}
 }

@@ -10,5 +10,7 @@ import com.springtest.models.UserModel;
 
 @Repository
 public interface IBillRepo extends JpaRepository<BillModel, Integer>{
+	
 	List<BillModel> findByUser(UserModel user);
+	
 }
