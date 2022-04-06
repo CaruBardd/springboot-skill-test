@@ -15,6 +15,10 @@ public class UserService {
 	@Autowired
 	private IUserRepo repo;
 	
+	public void createUserFromJson(UserModel json) {
+		repo.save(json);
+	}
+	
 	public void createUser(long id,String name, int age, String email) {
 		UserModel user = new UserModel();
 		user.setId(id);
@@ -33,4 +37,5 @@ public class UserService {
 		UserModel res = user.get();
 		return res;
 	}
+	
 }

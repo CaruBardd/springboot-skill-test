@@ -34,8 +34,20 @@ public class BillService {
 	}
 	
 	public BillModel findBillId(long id) {
-		Optional<BillModel> bill = repo.findById((int)id);
+		Optional<BillModel> bill = repo.findById(id);
 		BillModel res = bill.get();
 		return res;
+	}
+	
+	public void updateBill(long id, UserModel user, double totalAmount, String desc) {
+		BillModel bill = repo.findById(id).get();
+		bill.setTotalAmount(totalAmount);
+		bill.setUser(user);
+		bill.setDescription(desc);
+		repo.save(bill);
+	}
+	
+	public void deleteBill(long id) {
+		repo.deleteById(id);
 	}
 }
