@@ -1,6 +1,7 @@
 package com.springtest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,8 @@ public class WebController {
 	@Autowired
 	private BillService bill;
 	
+	// Test de base de datos únicamente para administradores
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/test")
 	public String test(Model model) {
 		user.createUser(Long.valueOf(1), "Pedrito", 30, "pedrito@yopmail.com");
@@ -28,6 +31,7 @@ public class WebController {
 		return "test";
 	}
 	
+	// Muestra de listas en web para administradores y usuarios
 	@GetMapping("/show")
 	public String show(Model model) {
 		model.addAttribute("users", user.listUsers());
@@ -35,6 +39,7 @@ public class WebController {
 		return "show";
 	}
 	
+	// Muestra de listas por usuario para administradores y usuarios
 	@GetMapping("/show/user")
 	public String showUser(@RequestParam(name="id", required=false, defaultValue="0") int id, Model model) {
 		if(id!=0) {
@@ -45,6 +50,7 @@ public class WebController {
 		return "show";
 	}
 	
+	// Muestra de listas por factura para administradores y usuarios
 	@GetMapping("/show/bill")
 	public String showBill(@RequestParam(name="id", required=false, defaultValue="0") int id, Model model) {
 		if(id!=0) {
@@ -55,6 +61,7 @@ public class WebController {
 		return "show";
 	}
 	
+	// Muestra de listas por factura de id de usuario para administradores y usuarios 
 	@GetMapping("/showusbill")
 	public String showUsBill(@RequestParam(name="id", required=false, defaultValue="0") int id, Model model) {
 		

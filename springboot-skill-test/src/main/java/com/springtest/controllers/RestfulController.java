@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -30,7 +31,8 @@ public class RestfulController {
 	@Autowired
 	private UserService userSv;
 	
-	
+	// Crear usuario únicamente para administradores
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping (value = "/create/user/{id}/{name}/{age}/{email}")
 	public ResponseEntity<UserModel> createUser(
 			@PathVariable("id") Integer id,
@@ -41,7 +43,9 @@ public class RestfulController {
 		userSv.createUser(Long.valueOf(id), name, age, email);
 		return new ResponseEntity<UserModel>(userSv.findUserId(Long.valueOf(id)), HttpStatus.CREATED);
 	}
-	
+
+	// Crear facturas únicamente para administradores
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping (value = "/create/bill/{id}/{totalAmount}/{description}/{id_user}")
 	public ResponseEntity<BillModel> createBill(
 			@PathVariable("id") Integer id,
@@ -53,11 +57,14 @@ public class RestfulController {
 		return new ResponseEntity<BillModel>(billSv.findBillId(Long.valueOf(id)), HttpStatus.CREATED);
 	}
 	
+	// Mostrar facturas por id de usuario para administradores y usuarios comúnes
 	@GetMapping(value = "/show/{id}")
 	public ResponseEntity<List<BillModel>> showData(@PathVariable("id") Integer id) {
 		return new ResponseEntity<List<BillModel>>(billSv.findBills(userSv.findUserId(Long.valueOf(id))), HttpStatus.OK);
 	}
 	
+	// Actualizar una factura únicamente para administradores
+	@PreAuthorize("hasRole('ADMIN')")
 	@PatchMapping(value = "/update/bill/{id}/{totalAmount}/{description}/{id_user}")
 	public ResponseEntity<BillModel> updateBill(
 			@PathVariable("id") Integer id,
@@ -73,6 +80,8 @@ public class RestfulController {
 		}
 	}
 	
+	// Eliminar factura únicamente para administradores
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value = "/delete/bill/{id}")
 	public ResponseEntity<Map<String, Boolean>> deteleBill(
 			@PathVariable("id") Integer id
