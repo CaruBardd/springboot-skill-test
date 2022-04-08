@@ -48,6 +48,8 @@ public class SecAuthController {
 	@Autowired
 	JwtProvider jwtProvider;
 	
+	
+	
 	@PostMapping("/new")
 	public ResponseEntity<?> createUser(
 			@Valid @RequestBody NewUserDto newUser,

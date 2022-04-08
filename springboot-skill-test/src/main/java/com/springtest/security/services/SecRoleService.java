@@ -21,6 +21,12 @@ public class SecRoleService {
 		return rolRepo.findByRoleName(roleName);
 	}
 	
+	public void createRole(SecRoleModel rol) {
+		rolRepo.save(rol);
+	}
 	
+	public boolean existsRole(int id) {
+		return rolRepo.existsById(id);
+	}
 	
 }

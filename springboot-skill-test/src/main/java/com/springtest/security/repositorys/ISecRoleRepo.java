@@ -12,5 +12,9 @@ import com.springtest.security.models.SecRoleModel;
 public interface ISecRoleRepo extends JpaRepository<SecRoleModel, Integer>{
 
 	Optional<SecRoleModel> findByRoleName(SecRoleNameEnum rolName);
+
+	boolean existsById(int id);
+	
+	
 	
 }
