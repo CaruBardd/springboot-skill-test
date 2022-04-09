@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/CaruBardd/springboot-skill-test/issues"
   },
-  "homepage": "https://github.com/CaruBardd/springboot-skill-test#readme"
+  "homepage": "https://github.com/CaruBardd/springboot-skill-test#readme",
+  "publishConfig": {
+    "@carubardd:registry": "https://npm.pkg.github.com"
+  }
 }
